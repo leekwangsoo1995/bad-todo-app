@@ -25,20 +25,42 @@ function mkRes(tag) {
 
 /**
  * アプリ起動:
- * 1. 作成
- * 2. 一覧取得
+ * 1. insert
+ * 2. select
+ * 3. delete
  */
 function boot() {
+  const cmd = (process.argv[2] || "demo").toLowerCase();
+
+  if (cmd === "insert") {
+    const title = (process.argv[3] || "").trim();
+    ctrl.create({ body: { title } }, mkRes("insert"));
+    return;
+  }
+
+  if (cmd === "select") {
+    ctrl.list({}, mkRes("select"));
+    return;
+  }
+
+  if (cmd === "delete") {
+    const id = process.argv[3];
+    ctrl.delete({ params: { id } }, mkRes("delete"));
+    return;
+  }
+
   ctrl.create({ body: { title: "" } }, mkRes("create#1"));
   ctrl.list({}, mkRes("list#1"));
 
-  try {
-    const raw = fs.readFileSync(dataFile, "utf8");
-    console.log("raw=", raw);
-  } catch (e) {
-    // ダメなポイント(エラーハンドリング 2/2): 致命的エラーなのに終了コード0で終了する。
-    console.error("fatal");
-    process.exit(0);
+  if (cmd === "demo") {
+    try {
+      const raw = fs.readFileSync(dataFile, "utf8");
+      console.log("raw=", raw);
+    } catch (e) {
+      // ダメなポイント(エラーハンドリング 2/2): 致命的エラーなのに終了コード0で終了する。
+      console.error("fatal");
+      process.exit(0);
+    }
   }
 }
 

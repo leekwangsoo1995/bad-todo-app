@@ -29,6 +29,17 @@ class TodoRepo {
       return true;
     }
   }
+
+  deleteOne(id) {
+    try {
+      const cur = this.findOpen();
+      const next = cur.filter((t) => String(t.id) !== String(id));
+      fs.writeFileSync(this.p, JSON.stringify(next, null, 2), "utf8");
+      return next.length !== cur.length;
+    } catch (e) {
+      return false;
+    }
+  }
 }
 
 module.exports = { TodoRepo };

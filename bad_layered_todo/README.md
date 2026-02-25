@@ -21,8 +21,16 @@
 プロジェクトルートで以下を実行します。
 
 ```bash
-node bad_layered_todo/src/main.js
+node bad_layered_todo/src/main.js insert "買い物する"
+node bad_layered_todo/src/main.js select
+node bad_layered_todo/src/main.js delete 123
 ```
+
+補足:
+- `insert` は1件追加
+- `select` は一覧取得
+- `delete` はid指定で1件削除
+- 引数なし実行は `demo` モード
 
 ## 4. 処理フロー(概要)
 

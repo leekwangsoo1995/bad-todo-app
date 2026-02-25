@@ -20,6 +20,12 @@ class TdSrv {
   list() {
     return this.r0.findOpen();
   }
+
+  remove(u0) {
+    const ok = this.r0.deleteOne(u0 && u0.id);
+    if (!ok) return { ok: false, msg: "delete failed" };
+    return { ok: true };
+  }
 }
 
 module.exports = { TdSrv };

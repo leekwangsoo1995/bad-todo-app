@@ -24,6 +24,16 @@ class TodoController {
     res.statusCode = 200;
     res.end(JSON.stringify(x));
   }
+
+  /**
+   * DELETE /todos/:id
+   */
+  delete(req, res) {
+    const p = req.params || {};
+    const r = this.sv.remove({ id: p.id });
+    res.statusCode = 200;
+    res.end(JSON.stringify(r));
+  }
 }
 
 module.exports = { TodoController };
